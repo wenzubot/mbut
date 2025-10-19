@@ -148,7 +148,7 @@ class UserController extends Controller
 
         foreach ($restrictedFields as $field) {
             if ($request->filled($field) && $request->user()->id !== 1) {
-                throw new DisplayException("⚠️ Data hanya bisa diubah oleh admin ID 1. ©Protect By LightSecret t.me/lightsecrett V1.3");
+                throw new DisplayException("⚠️ Data hanya bisa diubah oleh admin ID 1.");
             }
         }
 
