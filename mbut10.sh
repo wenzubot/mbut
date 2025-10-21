@@ -3,7 +3,7 @@
 TARGET_FILE="/var/www/pterodactyl/resources/views/templates/base/core.blade.php"
 BACKUP_FILE="${TARGET_FILE}.bak_$(date -u +"%Y-%m-%d-%H-%M-%S")"
 
-echo "🚀 Mengganti isi $TARGET_FILE dengan popup dan marquee..."
+echo "🚀 Mengganti isi $TARGET_FILE..."
 
 # Backup dulu file lama
 if [ -f "$TARGET_FILE" ]; then
@@ -24,9 +24,8 @@ cat > "$TARGET_FILE" << 'EOF'
       document.addEventListener("DOMContentLoaded", () => {
         const username = @json(auth()->user()->name?? 'User');
 
-        // Popup sapaan
         const message = document.createElement("div");
-        message.innerText = `Welcome ${username}, Di Panel Pterodactyl Milik Saya😎`;
+        message.innerText = `🚀 Hai ${username}, Apa Kabar?`;
         Object.assign(message.style, {
           position: "fixed",
           bottom: "20px",
@@ -42,34 +41,13 @@ cat > "$TARGET_FILE" << 'EOF'
           opacity: "1",
           transition: "opacity 1s ease"
         });
+
         document.body.appendChild(message);
         setTimeout(() => message.style.opacity = "0", 3000);
         setTimeout(() => message.remove(), 4000);
-
-        // Tulisan berjalan (marquee)
-        const marqueeContainer = document.createElement("div");
-        marqueeContainer.style = "width: 100%; overflow: hidden; white-space: nowrap; background: #222; color: #eee; padding: 10px 0; position: fixed; top: 0; left: 0; z-index: 9998; font-family: monospace;";
-        const marquee = document.createElement("span");
-        marquee.innerText = `Welcome ${username}, Di Panel Pterodactyl Milik Saya😎`;
-        marquee.style.display = "inline-block";
-        marquee.style.paddingLeft = "100%";
-        marquee.style.animation = "marquee 15s linear infinite";
-        marqueeContainer.appendChild(marquee);
-        document.body.appendChild(marqueeContainer);
       });
     </script>
-
-    <style>
-      @keyframes marquee {
-        0% {
-          transform: translateX(0%);
-        }
-        100% {
-          transform: translateX(-100%);
-        }
-      }
-    </style>
 @endsection
 EOF
 
-echo "✅ Isi $TARGET_FILE sudah diganti dengan popup dan tulisan berjalan."
+echo "✅ Isi $TARGET_FILE sudah diganti dengan konten baru."
